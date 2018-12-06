@@ -50,14 +50,14 @@
             // used by edgeSortFunctions
             currySort = function (reverseAngles) {
                 return function (a, b) {
-                    var r = true;
+                    var r;
                     if (reverseAngles) {
-                        r = a[0][0] < b[0][0];
+                        r = b[0][0] - a[0][0];
                     }
                     else {
-                        r = a[0][0] > b[0][0];
+                        r = a[0][0] - b[0][0];
                     }
-                    return r === false ? -1 : 1;
+                    return r;
                 };
             },
             // used by edgeSortFunctions
@@ -65,17 +65,13 @@
                 // first get adjusted values
                 var p1 = a[0][0] < 0 ? -Math.PI - a[0][0] : Math.PI - a[0][0],
                     p2 = b[0][0] < 0 ? -Math.PI - b[0][0] : Math.PI - b[0][0];
-                if (p1 > p2) {
-                    return 1;
-                }
-                else {
-                    return -1;
-                }
+
+                return p1 - p2;
             },
             // used by placeAnchors
             edgeSortFunctions = {
                 "top": function (a, b) {
-                    return a[0] > b[0] ? 1 : -1;
+                    return a[0] - b[0];
                 },
                 "right": currySort(true),
                 "bottom": currySort(true),
